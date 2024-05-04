@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { BsPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
 import WorkoutGoalCreateModal from "../../Components/Workout/WorkoutGoalCreateModal";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 const WorkoutGoals = () => {
   const {
@@ -70,29 +71,35 @@ const WorkoutGoals = () => {
   return (
     <div>
       <div className="flex justify-start space-x-20">
-        <div className="ml-8 flex justify-between items-center">
-          <h1 className="text-2xl m-4 font-semibold">My Goals</h1>
-          <BsPlusCircleFill
-            className="text-2xl text-blue-400"
-            onClick={handleClick}
-          />
-        </div>
-        <div>
-          <Select value={selectedType} onChange={handleChangeType}>
-            <option value="daily">Daily Goals</option>
-            <option value="weekly">Weekly Goals</option>
-            <option value="monthly">Monthly Goals</option>
-          </Select>
-        </div>
-        <div>
-          <Input
-            type="date"
-            value={startDate}
-            onChange={handleStartDateChange}
-          />
-          {selectedType !== "daily" && (
-            <Input type="date" value={endDate} onChange={handleEndDateChange} />
-          )}
+        <div className="ml-8 flex justify-between items-center space-x-60">
+          <div className="flex items-center space-x-2">
+            <h1 className="text-2xl m-4 font-semibold">My Goals</h1>
+            <BsPlusCircleFill
+              className="text-2xl text-blue-400"
+              onClick={handleClick}
+            />
+          </div>
+          <div className=" items-center">
+            <Select value={selectedType} onChange={handleChangeType}>
+              <option value="daily">Daily Goals</option>
+              <option value="weekly">Weekly Goals</option>
+              <option value="monthly">Monthly Goals</option>
+            </Select>
+          </div>
+          <div className="flex items-center">
+            <Input
+              type="date"
+              value={startDate}
+              onChange={handleStartDateChange}
+            />
+            {selectedType !== "daily" && (
+              <Input
+                type="date"
+                value={endDate}
+                onChange={handleEndDateChange}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div className="flex space-x-4 justify-center">
@@ -108,56 +115,66 @@ const WorkoutGoals = () => {
               </Flex>
             </CardHeader>
             <CardBody>
-              <Table size="" variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Name</Th>
-                    <Th>Description</Th>
-                    <Th>Target</Th>
-                    <Th>Unit</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {goals.map((goal) => {
-                    const goalStartDate = new Date(goal.startDate);
-                    const selectedDate = startDate ? new Date(startDate) : null;
+              {goals.map((goal, goalIndex) => {
+                const goalStartDate = new Date(goal.startDate);
+                const selectedDate = startDate ? new Date(startDate) : null;
 
-                    if (
-                      selectedType === "daily" &&
-                      selectedDate &&
-                      goalStartDate.getDate() === selectedDate.getDate() &&
-                      goalStartDate.getMonth() === selectedDate.getMonth() &&
-                      goalStartDate.getFullYear() === selectedDate.getFullYear()
-                    ) {
-                      return goal.activities.map((activity, index) => (
-                        <Tr key={index}>
-                          <Td>{activity.name}</Td>
-                          <Td>{activity.sets}</Td>
-                          <Td>{activity.target}</Td>
-                          <Td>{activity.unit}</Td>
-                        </Tr>
-                      ));
-                    } else if (
-                      selectedType !== "daily" &&
-                      (!startDate || goalStartDate >= new Date(startDate)) &&
-                      (!endDate ||
-                        !goal.endDate ||
-                        new Date(goal.endDate) <= new Date(endDate))
-                    ) {
-                      return goal.activities.map((activity, index) => (
-                        <Tr key={index}>
-                          <Td>{activity.name}</Td>
-                          <Td>{activity.sets}</Td>
-                          <Td>{activity.target}</Td>
-                          <Td>{activity.unit}</Td>
-                        </Tr>
-                      ));
-                    } else {
-                      return null;
-                    }
-                  })}
-                </Tbody>
-              </Table>
+                if (
+                  (selectedType === "daily" &&
+                    selectedDate &&
+                    goalStartDate.getDate() === selectedDate.getDate() &&
+                    goalStartDate.getMonth() === selectedDate.getMonth() &&
+                    goalStartDate.getFullYear() ===
+                      selectedDate.getFullYear()) ||
+                  (selectedType !== "daily" &&
+                    (!startDate || goalStartDate >= new Date(startDate)) &&
+                    (!endDate ||
+                      !goal.endDate ||
+                      new Date(goal.endDate) <= new Date(endDate)))
+                ) {
+                  return (
+                    <Card key={goalIndex} mb={4}>
+                      <CardBody>
+                        <FaDeleteLeft className="text-red-500 text-4xl float-end cursor-pointer" />
+                        <div className="flex">
+                          <div className="mr-4">
+                            <img
+                              src="https://images.healthshots.com/healthshots/en/uploads/2022/03/20121414/fitness-woman-1600x900.jpg"
+                              alt=""
+                              className="w-20 h-20"
+                            />
+                          </div>
+                          <Table size="" variant="">
+                            <Thead>
+                              <Tr>
+                                <Th width="25%">Name</Th>
+                                <Th width="25%">Description</Th>
+                                <Th width="25%">Target</Th>
+                              </Tr>
+                            </Thead>
+                            <Tbody>
+                              {goal.activities.map(
+                                (activity, activityIndex) => (
+                                  <Tr key={activityIndex}>
+                                    <Td width="25%">{activity.name}</Td>
+                                    <Td width="25%">{activity.sets}</Td>
+                                    <Td width="25%">
+                                      {activity.target}{" "}
+                                      <span>{activity.unit}</span>
+                                    </Td>
+                                  </Tr>
+                                )
+                              )}
+                            </Tbody>
+                          </Table>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </CardBody>
           </Card>
         </div>

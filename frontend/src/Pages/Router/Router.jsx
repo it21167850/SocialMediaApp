@@ -8,6 +8,7 @@ import WorkoutRoute from "../WorkoutPage/WorkoutRoute";
 import Workout from "../WorkoutPage/Workout";
 import UserLogin from "../auth/userLogin";
 import WorkoutStatus from "../WorkoutPage/WorkoutStatus";
+import UserRegister from "../auth/userRegister";
 
 export const Router = () => {
   const [loggedIn, setLoggedIn] = useState(
@@ -31,10 +32,13 @@ export const Router = () => {
         <div className="w-full">
           <Routes>
             {!loggedIn && (
-              <Route
-                path="/"
-                element={<UserLogin setLoggedIn={setLoggedIn} />}
-              />
+              <>
+                <Route
+                  path="/"
+                  element={<UserLogin setLoggedIn={setLoggedIn} />}
+                />
+                <Route path="/register" element={<UserRegister />} />
+              </>
             )}
             {loggedIn && <Route path="/home" element={<HomePage />} />}
             {loggedIn && <Route path="/username" element={<Profile />} />}
