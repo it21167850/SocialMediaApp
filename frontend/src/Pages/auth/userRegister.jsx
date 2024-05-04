@@ -203,7 +203,7 @@ const UserRegister = () => {
           <div className="mt-2">
             <p className="text-gray-600">
               Already have an account?{" "}
-              <Link to="/login" className="text-indigo-500 hover:underline">
+              <Link to="/" className="text-indigo-500 hover:underline">
                 Sign In
               </Link>
             </p>
