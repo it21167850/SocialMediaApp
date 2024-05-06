@@ -96,13 +96,21 @@ const WorkoutStatus = () => {
   return (
     <div>
       <div className="flex">
-        <Card maxW="md" className="ml-4 mt-20 w-[50%]">
-          <CardHeader>
+        <div>
+          <img
+            src="https://cdn.pixabay.com/photo/2017/03/26/21/54/yoga-2176668_1280.jpg"
+            alt=""
+            className="absolute z-0 object-cover w-full h-[89vh]"
+          />
+        </div>
+
+        <Card maxW="md" className="m-8 mt-20  w-[50%] rounded-md">
+          <CardHeader className="bg-blue-100 rounded-t-md">
             <Flex spacing="4">
               <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                 <Avatar
                   name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
+                  src="https://media.istockphoto.com/id/1398758305/photo/happy-young-intern-girl-looking-at-camera-smiling-getting-job.jpg?s=612x612&w=0&k=20&c=ufqqRkVOq-qQJ-uXoklmdQ2KDsR7k3OP9cMSquJFk9o="
                 />
 
                 <Box>
@@ -118,12 +126,18 @@ const WorkoutStatus = () => {
               />
             </Flex>
           </CardHeader>
-          <CardBody>
+
+          <CardBody className="bg-blue-100 rounded-b-md">
             <div>
               <label htmlFor="" className="font-semibold">
                 Height
               </label>
-              <Input onChange={handleHeight} value={height} disabled></Input>
+              <Input
+                onChange={handleHeight}
+                value={height}
+                disabled
+                className="border-2 border-blue-500 "
+              ></Input>
             </div>
             <div className="mt-4">
               <label htmlFor="" className="font-semibold">
@@ -155,28 +169,20 @@ const WorkoutStatus = () => {
             {calories && (
               <Button
                 onClick={handleUpdate}
-                className="text-4xl mt-4 float-end"
+                className="text-4xl mt-4 float-end bg-blue-500"
               >
                 Update
               </Button>
             )}
           </CardBody>
-
-          <CardFooter
-            justify="space-between"
-            flexWrap="wrap"
-            sx={{
-              "& > button": {
-                minW: "136px",
-              },
-            }}
-          ></CardFooter>
         </Card>
-        <div className="ml-10">
+        <div className="ml-10 mt-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <TbActivityHeartbeat />
-              <h1 className="text-2xl m-4 font-semibold">Workout Status</h1>
+              <TbActivityHeartbeat className="z-10" />
+              <h1 className="text-2xl m-4 font-semibold z-10">
+                Workout Status
+              </h1>
               <hr />
             </div>
 
@@ -191,7 +197,7 @@ const WorkoutStatus = () => {
           <div>
             <Stack>
               <Card size="md">
-                <CardBody>
+                <CardBody className="bg-blue-100 rounded-md">
                   <div className="">
                     <TableContainer>
                       <Table variant="simple">
@@ -208,7 +214,7 @@ const WorkoutStatus = () => {
                             <Td>
                               <div className="flex">
                                 <FaRunning className="text-xl" />
-                                <h2 className="ml-2">Running</h2>
+                                <h2 className="ml-2 font-semibold">Running</h2>
                               </div>
                             </Td>
                             <Td>
@@ -226,7 +232,9 @@ const WorkoutStatus = () => {
                             <Td>
                               <div className="flex">
                                 <GiWeightLiftingUp className="text-xl" />
-                                <h2 className="ml-2">Weight Lifting</h2>
+                                <h2 className="ml-2 font-semibold">
+                                  Weight Lifting
+                                </h2>
                               </div>
                             </Td>
                             <Td>
@@ -254,7 +262,7 @@ const WorkoutStatus = () => {
                             <Td>
                               <div className="flex">
                                 <GrYoga className="text-xl" />
-                                <h2 className="ml-2">Yoga</h2>
+                                <h2 className="ml-2 font-semibold">Yoga</h2>
                               </div>
                             </Td>
                             <Td>

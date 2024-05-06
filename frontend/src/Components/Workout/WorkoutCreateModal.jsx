@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import axios from "axios";
 import {
   Button,
   Input,
@@ -6,9 +8,8 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import axios from "axios"; // Import axios library
 import { FaRunning } from "react-icons/fa";
+import img from "../../assets/MyRouting.svg";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { GrYoga } from "react-icons/gr";
 import { FaSwimmer } from "react-icons/fa";
@@ -16,7 +17,7 @@ import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 
 const WorkoutCreateModal = ({ onClose, isOpen }) => {
   const [activities, setActivities] = useState([]);
-  const [date, setDate] = useState(""); // State to hold the date
+  const [date, setDate] = useState("");
 
   const handleInputChange = (index, name, value) => {
     const list = [...activities];
@@ -29,7 +30,9 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
   };
 
   const addActivity = (activity) => {
-    setActivities([...activities, activity]);
+    // Include activity name in the activity object
+    const newActivity = { ...activity, name: activity.name };
+    setActivities([...activities, newActivity]);
   };
 
   const userId = localStorage.getItem("userId");
@@ -38,7 +41,7 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
     try {
       const response = await axios.post(
         `http://localhost:8080/api/workouts/${userId}`,
-        { date, activities } // Send date along with activities in the request payload
+        { date, activities }
       );
       console.log("Workout created:", response.data);
       onClose();
@@ -52,11 +55,11 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
       <Modal size={"4xl"} onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalBody>
+          <ModalBody className="">
             <div>
               <div className="pb-10">
                 <div className="flex justify-between items-center">
-                  <h1 className="text-2xl m-4 font-semibold">Create Workout</h1>
+                  <h1 className="text-3xl m-4 font-semibold">Create Workout</h1>
                   <hr />
                   <hr />
                   <div>
@@ -65,8 +68,8 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
                       label="date"
                       placeholder="Select Date"
                       type="date"
-                      value={date} // Bind value to date state
-                      onChange={(e) => setDate(e.target.value)} // Update date state
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
                     />
                   </div>
                 </div>
@@ -92,8 +95,40 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
                           </h2>
                         </div>
                         <div className="flex">
-                          <div className="flex">
-                            {activity.name !== "Yoga" && (
+                          <div className="flex space-x-4">
+                            {activity.name === "Swimming" && (
+                              <>
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="startTime"
+                                  placeholder="Start Time"
+                                  value={activity.startTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "startTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="endTime"
+                                  placeholder="End Time"
+                                  value={activity.endTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "endTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </>
+                            )}
+                            {activity.name === "Running" && (
                               <>
                                 <Input
                                   size="md"
@@ -104,6 +139,51 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
                                     handleInputChange(
                                       index,
                                       "distance",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="startTime"
+                                  placeholder="Start Time"
+                                  value={activity.startTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "startTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="endTime"
+                                  placeholder="End Time"
+                                  value={activity.endTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "endTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </>
+                            )}
+                            {activity.name === "Weight Lifting" && (
+                              <>
+                                <Input
+                                  size="md"
+                                  name="weight"
+                                  placeholder="Weight"
+                                  value={activity.weight || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "weight",
                                       e.target.value
                                     )
                                   }
@@ -134,36 +214,69 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
                                     )
                                   }
                                 />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="startTime"
+                                  placeholder="Start Time"
+                                  value={activity.startTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "startTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="endTime"
+                                  placeholder="End Time"
+                                  value={activity.endTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "endTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
                               </>
                             )}
-                            <Input
-                              type="time"
-                              size="md"
-                              name="startTime"
-                              placeholder="Start Time"
-                              value={activity.startTime || ""}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  index,
-                                  "startTime",
-                                  e.target.value
-                                )
-                              }
-                            />
-                            <Input
-                              type="time"
-                              size="md"
-                              name="endTime"
-                              placeholder="End Time"
-                              value={activity.endTime || ""}
-                              onChange={(e) =>
-                                handleInputChange(
-                                  index,
-                                  "endTime",
-                                  e.target.value
-                                )
-                              }
-                            />
+
+                            {activity.name === "Yoga" && (
+                              <>
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="startTime"
+                                  placeholder="Start Time"
+                                  value={activity.startTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "startTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                                <Input
+                                  type="time"
+                                  size="md"
+                                  name="endTime"
+                                  placeholder="End Time"
+                                  value={activity.endTime || ""}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      index,
+                                      "endTime",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </>
+                            )}
                           </div>
                           <MdOutlineRemoveCircleOutline
                             onClick={() => removeActivity(index)}
@@ -176,18 +289,34 @@ const WorkoutCreateModal = ({ onClose, isOpen }) => {
                 </div>
               </div>
               <div className="float-end mt-4">
-                <Button onClick={() => addActivity({ name: "Running" })}>
-                  Add Running
-                </Button>
-                <Button onClick={() => addActivity({ name: "Weight Lifting" })}>
-                  Add Weight Lifting
-                </Button>
-                <Button onClick={() => addActivity({ name: "Yoga" })}>
-                  Add Yoga
-                </Button>
-                <Button onClick={() => addActivity({ name: "Swimming" })}>
-                  Add Swimming
-                </Button>
+                {!activities.find(
+                  (activity) => activity.name === "Running"
+                ) && (
+                  <Button onClick={() => addActivity({ name: "Running" })}>
+                    Add Running
+                  </Button>
+                )}
+                {!activities.find(
+                  (activity) => activity.name === "Weight Lifting"
+                ) && (
+                  <Button
+                    onClick={() => addActivity({ name: "Weight Lifting" })}
+                  >
+                    Add Weight Lifting
+                  </Button>
+                )}
+                {!activities.find((activity) => activity.name === "Yoga") && (
+                  <Button onClick={() => addActivity({ name: "Yoga" })}>
+                    Add Yoga
+                  </Button>
+                )}
+                {!activities.find(
+                  (activity) => activity.name === "Swimming"
+                ) && (
+                  <Button onClick={() => addActivity({ name: "Swimming" })}>
+                    Add Swimming
+                  </Button>
+                )}
                 <Button onClick={saveWorkout}>Save</Button>
               </div>
             </div>

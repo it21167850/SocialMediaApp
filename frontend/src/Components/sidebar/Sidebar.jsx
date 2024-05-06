@@ -43,7 +43,11 @@ export const Sidebar = ({ isLoggedIn, handleLogout }) => {
           <div>
             {activeTab !== "Search" && (
               <div className="pt-10">
-                <img className="w-40" src={logo} alt="" />
+                <img
+                  className="w-28 justify-center items-center text-center m-4"
+                  src={logo}
+                  alt=""
+                />
               </div>
             )}
             <div className="mt-10">
