@@ -70,6 +70,13 @@ const WorkoutGoals = () => {
 
   return (
     <div>
+      <div>
+        <img
+          src="https://cdn.pixabay.com/photo/2020/06/10/07/05/yoga-5281457_1280.jpg"
+          alt=""
+          className="absolute z-0 object-cover w-full h-[89vh]"
+        />
+      </div>
       <div className="flex justify-start space-x-20">
         <div className="ml-8 flex justify-between items-center space-x-60">
           <div className="flex items-center space-x-2">
@@ -105,7 +112,7 @@ const WorkoutGoals = () => {
       <div className="flex space-x-4 justify-center">
         <div className="w-[90%]">
           <Card>
-            <CardHeader>
+            <CardHeader className="bg-blue-100 rounded-t-md">
               <Flex justify="space-between">
                 <Heading size="md">
                   {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}{" "}
@@ -114,7 +121,7 @@ const WorkoutGoals = () => {
                 <BsThreeDotsVertical />
               </Flex>
             </CardHeader>
-            <CardBody>
+            <CardBody className="bg-blue-100 rounded-b-md">
               {goals.map((goal, goalIndex) => {
                 const goalStartDate = new Date(goal.startDate);
                 const selectedDate = startDate ? new Date(startDate) : null;
