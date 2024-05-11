@@ -25,13 +25,28 @@ import { TiTick } from "react-icons/ti";
 import { FaDeleteLeft, FaRegShareFromSquare } from "react-icons/fa6";
 import { TbActivityHeartbeat } from "react-icons/tb";
 import axios from "axios";
+import LastWorkoutPostModal from "../../Components/Workout/LastWorkoutShareModal";
 const Workout = () => {
   const [activities, setActivities] = useState([]);
   const [workoutDetails, setWorkoutDetails] = useState([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isWorkoutOpen,
+    onOpen: onWorkoutCreateOpen,
+    onClose: onWorkoutCreateClose,
+  } = useDisclosure();
 
-  const handleClick = () => {
-    onOpen();
+  const {
+    isOpen: isPostOpen,
+    onOpen: onPostOpen,
+    onClose: onPostClose,
+  } = useDisclosure();
+
+  const handleCreateClick = () => {
+    onWorkoutCreateOpen();
+  };
+
+  const handlePostClick = () => {
+    onPostOpen();
   };
 
   const userId = localStorage.getItem("userId");
@@ -93,7 +108,7 @@ const Workout = () => {
                     </div>
                     <div>
                       <AiFillPlusCircle
-                        onClick={handleClick}
+                        onClick={handleCreateClick}
                         className="text-4xl mr-4 z-10"
                       />
                     </div>
@@ -175,7 +190,7 @@ const Workout = () => {
                       </Tbody>
                     </Table>
                     <div className="float-end m-4 text-2xl cursor-pointer">
-                      <FaRegShareFromSquare />
+                      <FaRegShareFromSquare onClick={handlePostClick} />
                     </div>
                   </div>
                   <Text></Text>
@@ -281,7 +296,15 @@ const Workout = () => {
         </div>
       </div>
 
-      <WorkoutCreateModal onClose={onClose} isOpen={isOpen} />
+      <WorkoutCreateModal
+        onClose={onWorkoutCreateClose}
+        isOpen={isWorkoutOpen}
+      />
+      <LastWorkoutPostModal
+        isOpen={isPostOpen}
+        onClose={onPostClose}
+        lastWorkout={workoutDetails[0]}
+      />
     </div>
   );
 };

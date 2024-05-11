@@ -147,7 +147,7 @@ const WorkoutStatus = () => {
             </div>
             <div className="mt-4">
               <label htmlFor="" className="font-semibold mt-4">
-                Bmi
+                BMI
               </label>
               <Input onChange={handleBmi} value={bmi} disabled></Input>
             </div>
